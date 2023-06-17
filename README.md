@@ -19,9 +19,9 @@
 <img align="center" width=400 src="buildroot/share/pixmaps/tronxy/info.png" />
   
   4. If the applicable model listed on this page does not have your model, please download another appropriate firmware.
-  5. Open platformio.ini and go to the bottom, under the [my_proj] section and change the TRONXY_PROJ to your printer's model.  You can find the define constants in Marlin/TronxyMachine.h file.
+  5. Open Marlin/TronxyMachine.h and define the TRONXY_PROJ to your printer's model.  You can find the define constants in Marlin/TronxyMachine.h file.
     - Note: The modified project name must be a name defined above the file(TronxyMachine.h). If there is no such name, contact customer service for handling.
-  6. You can also change the TRONXY_UI in the platformio.ini under the [my_proj] section.
+  6. You can also define the TRONXY_UI in the Marlin/TronxyMachine.
   7. Compile the firmware. If an error occurs, please refer to the FAQ for solutions.The first compilation may take a long time, then the compiled target file is placed in the 'update' folder.
   8. Copy the 'update' folder into the root directory of the SD card, insert the card into the printer, restart, and the machine will automatically update the firmware. After that, the machine will run the current firmware.
 
