@@ -1565,7 +1565,39 @@
 || TRONXY_PROJ == PROJ_X5SA400_PRO \
 || TRONXY_PROJ == PROJ_X5SA400_2E \
 || TRONXY_PROJ == PROJ_X5SA_g
-#define NOZZLE_TO_PROBE_OFFSET { -38.5, -10, 0 }
+
+// ;;This section is for figuring out the value for the z offset. START vvv
+// ;; to be used with M851
+// ;; This subsection is to adjust the z balance.  On the X5SA model there are two z motors and they are out of balance most of the time.
+// ;; move up just to be safe
+// ;G91
+// ;G0 F480 Z20
+// ;G90
+// ;
+// ;;Leveling the blate by moving it up so that the motor slips on the one that is too high.
+// ;G28                 ; first Home
+// ;G0 Z10              ; move the print head up
+// ;G0 F3500 X330 Y0    ; move to a place where the nozzle safely move below the bed
+// ;M211 S0             ; Disable software endstops
+// ;G0 F360 Z-3         ; Z calibration step - move up high enough to 'hit' the top
+// ;G0 Z20              ; move Z back to a normal position
+// ;G0 F360 Z-4         ; Z calibration step - move up high enough to 'hit' the top
+// ;G0 Z20              ; move Z back to a normal position
+// ;M211 S1             ; Enable software endstops
+// ;
+// ;G0 Z20
+// ;G X165 Y165 ; Move to center of bed  330x330
+// ;G28 Z  ; home of Z
+// ;G4  S300 ; wait 5 minute, give enough time to measure the distance between the nozzle and the bed.
+// ;         ; the measured value will be the used with M581 (make sure to leave some space for first layer.
+// ;         ; Syntax: M851 Z-<the measured value>
+// ;         ; Example: M851 Z-4.3
+// The Nozzle to probe z offset was determined by the above Gcode.
+//Update note: The x5sa pro has only one power line for both Z motors, so there is no way to automatically
+//Adjust the Z balance.  There is a leveler at thingverse.com that one can print out and 
+// mount on the size bar.  I normally hand rotate the rod until the leveler hit the top on both
+// sides.  This is done during the Brim printing, usually the first line
+#define NOZZLE_TO_PROBE_OFFSET { -38.5, -10, -5 }
 #elif TRONXY_PROJ == PROJ_XY3SE \
 || TRONXY_PROJ == PROJ_XY3SE_2E \
 || TRONXY_PROJ == PROJ_D01 \
